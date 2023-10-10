@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAddNewProductMutation } from "../redux/features/products/productApi";
 
 export default function AddBook() {
-  const [addNewPost, response] = useAddNewProductMutation();
+  const [addNewPost] = useAddNewProductMutation();
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");

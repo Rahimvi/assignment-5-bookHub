@@ -4,7 +4,7 @@ import BookCard from "./BookCard";
 import Loading from "./Loader/Loader";
 
 export default function AllBook() {
-  const { data, isLoading, error } = useGetProductsQuery(undefined);
+  const { data, isLoading } = useGetProductsQuery(undefined);
   console.log(data);
 
   if (isLoading) return <Loading />;

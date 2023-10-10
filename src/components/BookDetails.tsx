@@ -20,7 +20,7 @@ const BookDetails = () => {
   const [showModal, setShowModal] = useState(false);
 
   // Fetch product data
-  const { data: product, isLoading, error } = useSingleProductQuery(id ?? "");
+  const { data: product, isLoading } = useSingleProductQuery(id ?? "");
 
   // Use the delete mutation hook
   const [deleteProduct] = useDeleteProductMutation();
