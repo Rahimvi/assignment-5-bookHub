@@ -1,4 +1,3 @@
-import { IBook } from "../../../types/globalTypes";
 import { api } from "../../api/apiSlice";
 
 export type FetchBaseQueryError = {
@@ -27,9 +26,13 @@ const productApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    getProducts: builder.query<IBook[], void>({
+    // getProducts: builder.query<IBook[], void>({
+    //   query: () => "/products",
+    // }),
+    getProducts: builder.query({
       query: () => "/products",
     }),
+
     singleProduct: builder.query({
       query: (id: string) => `/product/${id}`,
     }),

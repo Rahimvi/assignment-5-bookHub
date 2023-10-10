@@ -15,7 +15,7 @@ import { IBook } from "../../types/globalTypes";
 const SearchForm = () => {
   const dispatch = useDispatch();
   const books = useSelector((state: RootState) => state.books.books);
-  const searchCriteria = useSelector(
+  const searchCriteria: string = useSelector(
     (state: RootState) => state.books.searchCriteria
   );
   const genreFilter = useSelector(
@@ -26,7 +26,7 @@ const SearchForm = () => {
   );
 
   // Fetch products data using the API query
-  const { data } = useGetProductsQuery();
+  const { data } = useGetProductsQuery(undefined);
 
   // Effect to filter books whenever data or filters change
   useEffect(() => {
@@ -37,6 +37,10 @@ const SearchForm = () => {
   const filterBooks = () => {
     if (!data) return;
 
+    function isString(value: any): value is string {
+      return typeof value === "string";
+    }
+
     const filteredBooks = data?.data.filter((book: IBook) => {
       const titleMatch = book.title
         .toLowerCase()
@@ -44,9 +48,10 @@ const SearchForm = () => {
       const authorMatch = book.author
         .toLowerCase()
         .includes(searchCriteria.toLowerCase());
-      const genreMatch = genreFilter
-        ? book.genre.toLowerCase() === genreFilter.toLowerCase()
-        : true;
+      const genreMatch =
+        isString(genreFilter) &&
+        isString(book.genre) &&
+        book.genre.toLowerCase() === genreFilter;
       const yearMatch = publicationYearFilter
         ? book.publicationDate?.includes(publicationYearFilter)
         : true;

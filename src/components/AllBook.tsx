@@ -17,7 +17,7 @@ export default function AllBook() {
         </p>
       </div>
       <div className="grid grid-cols-4 gap-5 pt-6">
-        {data?.map((product: IBook) => (
+        {data?.data.map((product: IBook) => (
           <BookCard key={product._id} book={product} />
         ))}
       </div>
