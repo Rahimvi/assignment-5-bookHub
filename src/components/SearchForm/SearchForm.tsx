@@ -26,7 +26,7 @@ const SearchForm = () => {
   );
 
   // Fetch products data using the API query
-  const { data, isLoading, error } = useGetProductsQuery();
+  const { data } = useGetProductsQuery();
 
   // Effect to filter books whenever data or filters change
   useEffect(() => {

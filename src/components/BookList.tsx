@@ -1,13 +1,11 @@
 import { useGetProductsQuery } from "../redux/features/products/productApi";
-import { IBook } from "../types/globalTypes";
 import Book from "./Book";
 import "./BookList.css";
 import Loading from "./Loader/Loader";
 import SearchForm from "./SearchForm/SearchForm";
 
 const BookList = () => {
-  const { data, isLoading, error } = useGetProductsQuery(undefined);
-  console.log(data);
+  const { data, isLoading } = useGetProductsQuery(undefined);
 
   if (isLoading) return <Loading />;
 
@@ -23,7 +21,7 @@ const BookList = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-5 pt-6">
-        {data?.data.map((product: IBook) => (
+        {data?.data.map((product: any) => (
           <Book key={product._id} product={product} />
         ))}
       </div>
