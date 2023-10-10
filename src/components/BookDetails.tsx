@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+
 import {
   useDeleteProductMutation,
   useSingleProductQuery,
 } from "../redux/features/products/productApi";
 import { deleteBook } from "../redux/features/products/productSlice";
+import { useAppSelector } from "../redux/hook";
 import "./BookList.css";
 import BookReview from "./BookReview";
 import ConfirmationModal from "./ConfirmationModal";
 
 const BookDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
@@ -21,20 +24,6 @@ const BookDetails = () => {
 
   // Use the delete mutation hook
   const [deleteProduct] = useDeleteProductMutation();
-
-  // Function to handle the delete button click
-  // const handleDeleteClick = async () => {
-  //   try {
-  //     // Call the delete mutation function with the product ID
-  //     await deleteProduct(id);
-  //     // Optionally, dispatch an action to update the Redux store (if needed)
-  //     dispatch(deleteBook(id!));
-  //     // Redirect to a different page (e.g., the product list page)
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error("Error deleting product:", error);
-  //   }
-  // };
   const handleDeleteClick = () => {
     setShowModal(true);
   };
@@ -64,15 +53,19 @@ const BookDetails = () => {
     <>
       <div className="flex max-w-7xl mx-auto items-center border-b border-gray-300 mt-6">
         <div className="w-[50%]">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold me-2 py-2 px-4 rounded">
-            EDIT
-          </button>
-          <button
-            onClick={handleDeleteClick}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-          >
-            DELETE
-          </button>
+          {user.email && (
+            <>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold me-2 py-2 px-4 rounded">
+                EDIT
+              </button>
+              <button
+                onClick={handleDeleteClick}
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+              >
+                DELETE
+              </button>
+            </>
+          )}
           <ConfirmationModal
             isOpen={showModal}
             onClose={() => setShowModal(false)}
